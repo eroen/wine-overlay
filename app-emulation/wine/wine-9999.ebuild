@@ -324,8 +324,10 @@ src_unpack() {
 	if [[ ${PV} == "9999" ]] ; then
 		git-r3_src_unpack
 		if use staging || use pulseaudio; then
+			local esc_pn
+			esc_pn=${PN//[-+]/_}
+			unset ${esc_pn}_LIVE_REPO ${esc_pn}_LIVE_BRANCH ${esc_pn}_LIVE_COMMIT
 			EGIT_REPO_URI=${STAGING_EGIT_REPO_URI}
-			unset ${PN}_LIVE_REPO;
 			EGIT_CHECKOUT_DIR=${STAGING_DIR} git-r3_src_unpack
 		fi
 	else
